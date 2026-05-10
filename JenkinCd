@@ -1,0 +1,38 @@
+pipeline{
+    agent any
+    environment {
+        user = 'sriramk16'
+        repo = 'flask_blog'
+        port = '9045:5000'
+        DOCKER_TOKEN = credentials('dockerhub-token')
+    }
+    parameters {
+        string(name: 'UPSTREAM_BUILD', defaultValue: '', description: 'Parameter from upstream')
+    }
+    stages {
+        stage("Deploy to container"){
+            steps{
+                sh "docker rm -f flask-cont ||  true"
+                sh "docker run -itd --name flask-cont -p $port $user/$repo:${params.UPSTREAM_BUILD}"
+            }
+        }
+        stage("Smoke Test"){
+            steps{
+                sh 'sleep 10; curl -s http://localhost:9045 || true'
+            }
+        }
+        stage ("Remove extras") {
+            steps {
+                sh "docker image prune -a -f"
+            }
+        }
+    }
+    post {
+        failure {
+            echo "${currentBuild.result} to deploy the python flask app"
+        }
+        success {
+            echo "${currentBuild.result} deployed the python flask app"
+        }
+    }
+}

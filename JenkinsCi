@@ -1,0 +1,58 @@
+pipeline{
+    agent any
+    environment {
+        user = 'sriramk16'
+        repo = 'flask_blog'
+        port = '9045:5000'
+        DOCKER_TOKEN = credentials('dockerhub-token')
+    }
+   
+    stages {
+        stage ("Checkout") {
+            steps {
+                git branch: 'main', url: 'https://github.com/Kajjayamsriram/blog-flask.git'
+            }
+        }
+        stage ("Build Image") {
+            steps{
+                sh 'docker build -t $user/$repo:$BUILD_ID .'
+            }
+        }
+        stage ("Push Registry") {
+            steps{
+                sh 'echo $DOCKER_TOKEN | docker login -u $user --password-stdin'
+                sh 'docker push $user/$repo:$BUILD_ID'
+                sh 'docker logout'
+            }
+        }
+        stage ("Simulate Failure") {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh "docker run -itd --name flask-cont -p $port $user/$repo:$BUILD_ID"
+                }
+            }
+        }
+        stage ("Skipping failure") {
+            steps {
+                script {
+                    try {
+                        sh "exit 1"
+                    } catch (Exception skip) {
+                        echo "skipping this as exception"
+                    }
+                }
+            }
+        }
+    }
+    post {
+        failure {
+            echo "${currentBuild.result} in pushing Image"
+        }
+        success {
+            build job: 'Cd',
+            parameters: [
+                string(name: 'UPSTREAM_BUILD', value: "${env.BUILD_ID}")
+            ]
+        }
+    }
+}
