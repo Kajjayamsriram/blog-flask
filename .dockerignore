@@ -2,3 +2,5 @@ Dockerfile
 JenkinsfileCd
 JenkinsfileCi
 requirements.txt
+.git
+.gitignore
