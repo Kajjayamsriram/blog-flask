@@ -42,8 +42,7 @@ docker exec -u root -it jenkins chmod 666 /var/run/docker.sock
 ## 🐳 Install Docker CLI inside Jenkins container
 
 ```
-docker exec -u root -it jenkins bash -lc \
-'curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh'
+docker exec -u root -it jenkins bash -lc 'curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh'
 ```
 
 ## 🔍 Verify Docker Inside Jenkins
