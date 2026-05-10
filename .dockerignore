@@ -3,3 +3,4 @@ JenkinsfileCd
 JenkinsfileCi
 .git
 .gitignore
+.dockerignore
