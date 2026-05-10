@@ -12,4 +12,4 @@ RUN useradd -m -s /bin/bash sriram && \
 USER sriram
 
 EXPOSE 5000
-CMD ['python', 'app.py']
+CMD ["python3", "app.py"]
