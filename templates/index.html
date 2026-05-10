@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Home - ModernBlog{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <div class="hero-content">
+        <h1>Welcome to ModernBlog</h1>
+        <p>Discover inspiring stories, insights, and ideas from creative minds</p>
+        <a href="/create-post" class="hero-btn">✍️ Start Writing</a>
+    </div>
+</div>
+
+<div class="posts-container">
+    <h2 class="section-title">Latest Posts</h2>
+    <div class="posts-grid">
+        {% for post in posts %}
+        <article class="post-card">
+            <div class="post-card-inner">
+                <div class="post-meta">
+                    <span>{{ post.date }}</span>
+                    <span>✍️ {{ post.author }}</span>
+                </div>
+                <h2 class="post-title">
+                    <a href="{{ url_for('view_post', post_id=post.id) }}">{{ post.title }}</a>
+                </h2>
+                <p class="post-excerpt">{{ post.content[:120] }}...</p>
+                <div class="post-footer">
+                    <a href="{{ url_for('view_post', post_id=post.id) }}" class="read-more">Read More →</a>
+                    <div class="likes">
+                        <a href="{{ url_for('like_post', post_id=post.id) }}" class="like-btn">❤️</a>
+                        <span>{{ post.likes }}</span>
+                    </div>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} - Modern Blog{% endblock %}
+
+{% block content %}
+<div class="post-container">
+    <article class="single-post">
+        <div class="post-header">
+            <h1 class="post-title-large">{{ post.title }}</h1>
+            <div class="post-info">
+                <span class="post-author">✍️ {{ post.author }}</span>
+                <span class="post-date">📅 {{ post.date }}</span>
+                <span class="post-likes">❤️ {{ post.likes }} likes</span>
+            </div>
+        </div>
+        
+        <div class="post-content">
+            <p>{{ post.content }}</p>
+        </div>
+        
+        <div class="post-actions">
+            <a href="{{ url_for('like_post', post_id=post.id) }}" class="action-btn like-btn-large">
+                ❤️ Like this post ({{ post.likes }})
+            </a>
+            <a href="{{ url_for('index') }}" class="action-btn back-btn">
+                ← Back to Home
+            </a>
+        </div>
+    </article>
+</div>
+{% endblock %}

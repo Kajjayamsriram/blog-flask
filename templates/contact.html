@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us - Modern Blog{% endblock %}
+
+{% block content %}
+<div class="contact-container">
+    <div class="contact-header">
+        <h1>Get in Touch</h1>
+        <p>We'd love to hear from you!</p>
+    </div>
+    
+    <div class="contact-grid">
+        <div class="contact-info">
+            <h2>Contact Information</h2>
+            <div class="info-item">
+                <span class="info-icon">📍</span>
+                <div>
+                    <h3>Address</h3>
+                    <p>123 Blog Street<br>Digital City, DC 12345</p>
+                </div>
+            </div>
+            <div class="info-item">
+                <span class="info-icon">📧</span>
+                <div>
+                    <h3>Email</h3>
+                    <p>hello@modernblog.com</p>
+                </div>
+            </div>
+            <div class="info-item">
+                <span class="info-icon">📞</span>
+                <div>
+                    <h3>Phone</h3>
+                    <p>+1 (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="info-item">
+                <span class="info-icon">⏰</span>
+                <div>
+                    <h3>Hours</h3>
+                    <p>Monday - Friday: 9am - 6pm</p>
+                </div>
+            </div>
+            
+            <div class="social-links">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#">📘</a>
+                    <a href="#">🐦</a>
+                    <a href="#">📷</a>
+                    <a href="#">💼</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="contact-form">
+            <h2>Send us a message</h2>
+            <form method="POST" action="{{ url_for('contact') }}">
+                <div class="form-group">
+                    <label for="name">Name *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message *</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Message →</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
