@@ -19,8 +19,8 @@ This project demonstrates a CI/CD pipeline using Jenkins and Docker Desktop to b
 - Open PowerShell as Administrator: 
 
 ```
-wsl --install
 wsl -l -v  #lists docker-desktop
+wsl --install #if not installed already
 wsl --update  #if required**
 ```
 
